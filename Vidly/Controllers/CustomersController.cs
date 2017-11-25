@@ -24,10 +24,17 @@ namespace Vidly.Controllers
 
         public ActionResult Details(int id)
         {
-            var customer = _customers.SingleOrDefault(cus => cus.Id == id);
-            if (customer == null)
+            try
+            {
+                var customer = _customers.SingleOrDefault(cus => cus.Id == id);
+                if (customer == null)
+                    return HttpNotFound();
+                return View(customer);
+            }
+            catch (NullReferenceException)
+            {
                 return HttpNotFound();
-            return View(customer);
+            }
         }
     }
 }

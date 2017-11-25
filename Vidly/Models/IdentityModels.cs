@@ -18,8 +18,14 @@ namespace Vidly.Models
         }
     }
 
+    /// <summary>
+    /// When we type in add-migration, this class is what NuGet sees to create the migration model file. Add our 
+    /// own models here.
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Customer> Customers { get; set; } // Our Model
+        public DbSet<Movie> Movies { get; set; } // Our Model
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
