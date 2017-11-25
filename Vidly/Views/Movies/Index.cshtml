@@ -7,20 +7,26 @@
 
 <h2>Movies</h2>
 
-
-<table class="table table-bordered table-hover">
-    <tr>
-        <th>
-            Movies
-        </th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-    </tr>
+@if (!Model.Any())
+{
+    <p>No movie records exist!!!</p>
 }
+else
+{
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                Movies
+            </th>
+        </tr>
 
-</table>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
+
+    </table>
+}
