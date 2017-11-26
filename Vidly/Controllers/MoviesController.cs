@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
+    /// <summary>
+    /// The Movies controller handles every event of the "Movies" tab.
+    /// </summary>
     public class MoviesController : Controller
     {
-        // GET: Movies/Random
+        /// <summary>
+        /// Test Method. Gets a random list of movies and customers
+        /// </summary>
+        /// <returns></returns>
         public ViewResult Random()
         {
             var movie = new Movie() { Name = "Shrek!" };
@@ -29,12 +33,20 @@ namespace Vidly.Controllers
             return View(movieViewModel);
         }
 
+        /// <summary>
+        /// Test Method to check parameter passing to URL
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Edit(int id)
         {
             return Content("id = " + id);
         }
 
-        // movies
+        /// <summary>
+        /// Displays the list of movies available. (Need to add database call)
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             var movies = new List<Movie>()

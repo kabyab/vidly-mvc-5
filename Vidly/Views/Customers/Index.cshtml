@@ -9,7 +9,7 @@
 
 @if (!Model.Any())
 {
-    <p>We don't have any customers yet!!</p>
+    <p>We don't have any customers yet!!</p> <!-- In case we do not have any customers yet -->
 }
 else
 {
@@ -19,7 +19,7 @@ else
                 Customer
             </th>
             <th>
-                Membership
+                Membership Type
             </th>
         </tr>
 
@@ -33,6 +33,5 @@ else
                 </td>
             </tr>
         }
-
     </table>
 }
