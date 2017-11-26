@@ -18,12 +18,18 @@ else
             <th>
                 Movies
             </th>
+            <th>
+                Genre
+            </th>
         </tr>
 
         @foreach (var item in Model) {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.ActionLink(item.Name, "Details", "Movies", new { id = item.Id }, null)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.Name)
                 </td>
             </tr>
         }

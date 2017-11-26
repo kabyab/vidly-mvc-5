@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Vidly.Models;
+using System.Data.Entity;
 using Vidly.ViewModels;
+using System;
 
 namespace Vidly.Controllers
 {
@@ -11,52 +14,56 @@ namespace Vidly.Controllers
     public class MoviesController : Controller
     {
         /// <summary>
-        /// Test Method. Gets a random list of movies and customers
+        /// The global ApplicationDbContext field, helps fetch all the objects that are mapped to our database
         /// </summary>
-        /// <returns></returns>
-        public ViewResult Random()
+        private readonly ApplicationDbContext _context;
+
+        /// <summary>
+        /// Constructor to initialize the ApplicationDbContext object
+        /// </summary>
+        public MoviesController()
         {
-            var movie = new Movie() { Name = "Shrek!" };
-
-            var customers = new List<Customer>
-            {
-                new Customer {Name = "Customer 1"},
-                new Customer {Name = "Customer 2"}
-            };
-
-            var movieViewModel = new RandomMovieViewModel
-            {
-                Movie =  movie,
-                Customers =  customers
-            };
-
-            return View(movieViewModel);
+            _context = new ApplicationDbContext();
         }
 
         /// <summary>
-        /// Test Method to check parameter passing to URL
+        /// Dispose method overriden to ensure garbage collection
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult Edit(int id)
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
         {
-            return Content("id = " + id);
+            _context.Dispose();
         }
-
         /// <summary>
-        /// Displays the list of movies available. (Need to add database call)
+        /// Displays the list of movies available.
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
         {
-            var movies = new List<Movie>()
-            {
-                new Movie {Name = "Shrek!"},
-                new Movie {Name = "Inception"},
-                new Movie {Name = "Wall-E"}
-            };
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
 
             return View(movies);
+        }
+
+        /// <summary>
+        /// Returns the details of a Customer with the given Id
+        /// </summary>
+        /// <param name="id">The Id of the Customer whose details are requested</param>
+        /// <returns>Customer Object</returns>
+        public ActionResult Details(int id)
+        {
+            try
+            {
+                var movie = _context.Movies.Include(c => c.Genre).SingleOrDefault(mov => mov.Id == id);
+                if (movie == null) // If Customer with given Id does not exist
+                    return HttpNotFound();
+                return View(movie);
+            }
+            catch (NullReferenceException)
+            {
+                // If ApplicationDbContext is not initialized
+                return HttpNotFound();
+            }
         }
 
         [Route("movies/released/{year}/{month:regex(\\d{4}):range(1, 12)}")]
