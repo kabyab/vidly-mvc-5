@@ -21,6 +21,10 @@ namespace Vidly.Models
         [Required]
         public string Name { get; set; }
         /// <summary>
+        /// Birth date of customer
+        /// </summary>
+        public DateTime? BirthDate { get; set; }
+        /// <summary>
         /// Whether the customer has subscribed to newsletter or not
         /// </summary>
         [Required]

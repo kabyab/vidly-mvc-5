@@ -60,7 +60,7 @@ namespace Vidly.Controllers
         {
             try
             {
-                var customer = _context.Customers.SingleOrDefault(cus => cus.Id == id);
+                var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(cus => cus.Id == id);
                 if (customer == null) // If Customer with given Id does not exist
                     return HttpNotFound();
                 return View(customer);
