@@ -19,10 +19,12 @@ namespace Vidly.Models
         /// Name of customer. The attribute makes it NOT NULL.
         /// </summary>
         [Required]
+        [StringLength(255)]
         public string Name { get; set; }
         /// <summary>
         /// Birth date of customer
         /// </summary>
+        [Display(Name = "Date of Birth")]
         public DateTime? BirthDate { get; set; }
         /// <summary>
         /// Whether the customer has subscribed to newsletter or not
@@ -33,6 +35,7 @@ namespace Vidly.Models
         /// Type of memnership. This is a navigation type.
         /// </summary>
         [Required]
+        [Display(Name = "Membership Type")]
         public MembershipType MembershipType { get; set; }
     }
 }

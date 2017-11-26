@@ -55,7 +55,7 @@ namespace Vidly.Controllers
             try
             {
                 var movie = _context.Movies.Include(c => c.Genre).SingleOrDefault(mov => mov.Id == id);
-                if (movie == null) // If Customer with given Id does not exist
+                if (movie == null) // If Movie with given Id does not exist
                     return HttpNotFound();
                 return View(movie);
             }
